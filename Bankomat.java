@@ -1,6 +1,6 @@
 import java.util.LinkedList;
 
-class BankCard {
+abstract class BankCard {
 
     static int N = 2;
 
@@ -19,13 +19,17 @@ class BankCard {
 
     public void setMassivdc(long numcard, long balance) {
 
+        int BR = 0;
+
         for(int i = 0; i < massivdc.length; i++) {
             if(massivdc[i][0] == numcard) {
                 massivdc[i][1] = balance;
             } else if(massivdc[i][0] == 0) {
                 massivdc[i][0] = numcard;
                 massivdc[i][1] = balance;
+                BR = 1;
             }
+            if(BR == 1) { break; }
             //System.out.println("Исчерпан лимит номеров");
         }
 
@@ -46,13 +50,17 @@ class BankCard {
 
     public void setMassivcc(long numcard, long balance) {
 
+        int BR = 0;
+
         for(int i = 0; i < massivcc.length; i++) {
             if(massivcc[i][0] == numcard) {
                 massivcc[i][1] = balance;
             } else if(massivcc[i][0] == 0) {
                 massivcc[i][0] = numcard;
                 massivcc[i][1] = balance;
+                BR = 1;
             }
+            if(BR == 1) { break; }
             //System.out.println("Исчерпан лимит номеров");
         }
 
@@ -75,10 +83,6 @@ class BankCard {
     }
     public LinkedList<Item> bankcard = new LinkedList<>();
 
-    /*
-    public static void main(String[] args) {
-
-    }*/
 
     public static void showBalanceCard(String title, LinkedList<BankCard.Item> bankcard) {
         System.out.println(title);
@@ -106,7 +110,7 @@ class BankCard {
                     newsumma = l.balance + summa;
 
                     setMassivdc(numcard, newsumma);
-                    System.out.println("Геттер равен " + getMassivdc(numcard));
+                    //System.out.println("Геттер равен " + getMassivdc(numcard));
 
                     l.setBalance(newsumma);
                     bankcard.set(i, l);
@@ -120,7 +124,7 @@ class BankCard {
                 item.setNumber(numcard);
 
                 setMassivdc(numcard, summa);
-                System.out.println("Геттер равен " + getMassivdc(numcard));
+                //System.out.println("Геттер равен " + getMassivdc(numcard));
 
                 item.setBalance(summa);
                 bankcard.add(item);
@@ -143,17 +147,17 @@ class BankCard {
                             newsumma = l.balance + newlimost;
 
                             setMassivcc(numcard, newsumma);
-                            System.out.println("Геттер равен " + getMassivcc(numcard));
+                            //System.out.println("Геттер равен " + getMassivcc(numcard));
 
                             l.setBalance(newsumma);
 
                             CreditCard.setMassivclim(numcard, sumlim);
-                            System.out.println("Геттер равен " + CreditCard.getMassivclim(numcard));
+                            //System.out.println("Геттер равен " + CreditCard.getMassivclim(numcard));
 
                             l.setSumlim(sumlim);
                         } else if(newlim <= 10000) {
                             CreditCard.setMassivclim(numcard, newlim);
-                            System.out.println("Геттер равен " + CreditCard.getMassivclim(numcard));
+                            //System.out.println("Геттер равен " + CreditCard.getMassivclim(numcard));
 
                             l.setSumlim(newlim);
                         }
@@ -161,7 +165,7 @@ class BankCard {
                         newsumma = l.balance + summa;
 
                         setMassivcc(numcard, newsumma);
-                        System.out.println("Геттер равен " + getMassivcc(numcard));
+                        //System.out.println("Геттер равен " + getMassivcc(numcard));
 
                         l.setBalance(newsumma);
                     }
@@ -176,12 +180,12 @@ class BankCard {
                 item.setNumber(numcard);
 
                 CreditCard.setMassivclim(numcard, sumlim);
-                System.out.println("Геттер равен " + CreditCard.getMassivclim(numcard));
+                //System.out.println("Геттер равен " + CreditCard.getMassivclim(numcard));
 
                 item.setSumlim(sumlim);
 
                 setMassivcc(numcard, summa);
-                System.out.println("Геттер равен " + getMassivcc(numcard));
+                //System.out.println("Геттер равен " + getMassivcc(numcard));
 
                 item.setBalance(summa);
                 bankcard.add(item);
@@ -205,7 +209,7 @@ class BankCard {
                     newsumma = l.balance - summa;
 
                     setMassivdc(numcard, newsumma);
-                    System.out.println("Геттер равен " + getMassivdc(numcard));
+                    //System.out.println("Геттер равен " + getMassivdc(numcard));
 
                     l.setBalance(newsumma);
                     bankcard.set(i, l);
@@ -230,7 +234,7 @@ class BankCard {
                         newsumma = l.balance - summa;
 
                         setMassivcc(numcard, newsumma);
-                        System.out.println("Геттер равен " + getMassivcc(numcard));
+                        //System.out.println("Геттер равен " + getMassivcc(numcard));
 
                         l.setBalance(newsumma);
                     } else {
@@ -238,12 +242,12 @@ class BankCard {
                         newcredlim = l.sumlim - credost;
 
                         setMassivcc(numcard, 0);
-                        System.out.println("Геттер равен " + getMassivcc(numcard));
+                        //System.out.println("Геттер равен " + getMassivcc(numcard));
 
                         l.setBalance(0);
 
                         CreditCard.setMassivclim(numcard, newcredlim);
-                        System.out.println("Геттер равен " + CreditCard.getMassivclim(numcard));
+                        //System.out.println("Геттер равен " + CreditCard.getMassivclim(numcard));
 
                         l.setSumlim(newcredlim);
                     }
@@ -291,13 +295,17 @@ class CreditCard extends BankCard {
 
     public static void setMassivclim(long numcard, long credlim) {
 
+        int BR = 0;
+
         for(int i = 0; i < massivclim.length; i++) {
             if(massivclim[i][0] == numcard) {
                 massivclim[i][1] = credlim;
             } else if(massivclim[i][0] == 0) {
                 massivclim[i][0] = numcard;
                 massivclim[i][1] = credlim;
+                BR = 1;
             }
+            if(BR == 1) { break; }
             //System.out.println("Исчерпан лимит номеров");
         }
 
@@ -321,73 +329,55 @@ public class Bankomat {
 
     public static void main(String[] args) {
 
-        BankCard bankcards = new BankCard();
-
-        //bankcards.setMassivdc(1, 100000);
-        //System.out.println("Запуск геттер через экземпляр класса " + bankcards.getMassivdc(1));
-
-        //System.out.println("Запуск геттер через ссылку " + BankCard.getMassivdc(1));
-
         DebitCard debitcards = new DebitCard();
 
-        debitcards.replenishmentaccount("DebitCard",1, 2000, 0, debitcards.bankcard);
-        System.out.println("Тип карты = '" + "DebitCard" + '\'' + " Номер карты = '" + "1" + '\'' + " Баланс карты '" + bankcards.getMassivdc(1) + '\'');
+        debitcards.replenishmentaccount("DebitCard", 1, 2000, 0, debitcards.bankcard);
+        System.out.println("Тип карты = '" + "DebitCard" + '\'' + " Номер карты = '" + "1" + '\'' + " Баланс карты '" + debitcards.getMassivdc(1) + '\'');
 
-        //debitcards.replenishmentaccount("DebitCard","002", 500, 0, debitcards.bankcard);
-        //System.out.println(" Номер карты = " + " 2 " + " Баланс карты " + bankcards.getMassivdc(2));
-        System.out.println("Тип карты = '" + "DebitCard" + '\'' + " Номер карты = '" + "2" + '\'' + " Баланс карты '" + bankcards.getMassivdc(2) + '\'');
+        debitcards.replenishmentaccount("DebitCard", 2, 500, 0, debitcards.bankcard);
+        System.out.println("Тип карты = '" + "DebitCard" + '\'' + " Номер карты = '" + "2" + '\'' + " Баланс карты '" + debitcards.getMassivdc(2) + '\'');
 
-        debitcards.replenishmentaccount("DebitCard",1, 100, 0, debitcards.bankcard);
+        debitcards.replenishmentaccount("DebitCard", 1, 100, 0, debitcards.bankcard);
 
-        debitcards.paythebill("DebitCard",1, 300, 0, 0, debitcards.bankcard);
+        debitcards.paythebill("DebitCard", 1, 300, 0, 0, debitcards.bankcard);
 
-        //debitcards.replenishmentaccount("DebitCard","010", 1111, 0, debitcards.bankcard);
         debitcards.showBalanceCard("Баланс карты", debitcards.bankcard);
-
-
 
 
         CreditCard creditcards = new CreditCard();
 
-        creditcards.replenishmentaccount("CreditCard",1, 0, 0, creditcards.bankcard);
-        creditcards.replenishmentaccount("CreditCard",1, 5000, 0, creditcards.bankcard);
+        creditcards.replenishmentaccount("CreditCard", 1, 0, 0, creditcards.bankcard);
+        creditcards.replenishmentaccount("CreditCard", 1, 5000, 0, creditcards.bankcard);
 
-        creditcards.paythebill("CreditCard",1, 5000, 0, 0, creditcards.bankcard);
+        creditcards.paythebill("CreditCard", 1, 5000, 0, 0, creditcards.bankcard);
 
-        creditcards.paythebill("CreditCard",1, 3000, 0, 0, creditcards.bankcard);
+        creditcards.paythebill("CreditCard", 1, 3000, 0, 0, creditcards.bankcard);
 
-        System.out.println("Тип карты = '" + "CreditCard" + '\'' + " Номер карты = '" + "1" + '\'' + " Баланс карты '" + bankcards.getMassivcc(1) + '\'' + " Кредитный лимит '" + creditcards.getMassivclim(1) + '\'');
+        System.out.println("Тип карты = '" + "CreditCard" + '\'' + " Номер карты = '" + "1" + '\'' + " Баланс карты '" + creditcards.getMassivcc(1) + '\'' + " Кредитный лимит '" + creditcards.getMassivclim(1) + '\'');
 
-        creditcards.replenishmentaccount("CreditCard",1, 2000, 0, creditcards.bankcard);
+        creditcards.replenishmentaccount("CreditCard", 1, 2000, 0, creditcards.bankcard);
 
-        creditcards.replenishmentaccount("CreditCard",1, 2000, 0, creditcards.bankcard);
+        creditcards.replenishmentaccount("CreditCard", 1, 2000, 0, creditcards.bankcard);
+
+        creditcards.replenishmentaccount("CreditCard", 2, 5000, 0, creditcards.bankcard);
 
         creditcards.showBalanceCard("Баланс карты", creditcards.bankcard);
 
 
-        /*
-
         DebitCard1 debitcards1 = new DebitCard1();
 
-        //debitcards1.replenishmentaccount("DebitCard","001", 5000, debitcards.bankcard);
-        debitcards1.paythebill("DebitCard","001", 5000, 1, 0, debitcards.bankcard);
-
+        debitcards1.paythebill("DebitCard", 1, 5000, 1, 0, debitcards.bankcard);
         debitcards1.showBalanceCard("Баланс карты", debitcards.bankcard);
 
         DebitCard2 debitcards2 = new DebitCard2();
 
-        debitcards2.replenishmentaccount("DebitCard","001", 5000, 1, debitcards.bankcard);
-        //debitcards1.paythebill("DebitCard","001", 5000, 1, 0, debitcards.bankcard);
-
+        debitcards2.replenishmentaccount("DebitCard", 1, 5000, 1, debitcards.bankcard);
         debitcards2.showBalanceCard("Баланс карты", debitcards.bankcard);
 
         CreditCard1 creditcards1 = new CreditCard1();
 
-        creditcards1.paythebill("CreditCard","001", 6000, 1, 1, creditcards.bankcard);
-
+        creditcards1.paythebill("CreditCard", 1, 6000, 1, 1, creditcards.bankcard);
         creditcards1.showBalanceCard("Баланс карты", creditcards.bankcard);
-
-         */
 
     }
 }
